@@ -1,0 +1,50 @@
+{
+  "name": "s-localstorage",
+  "version": "1.0.3",
+  "description": "Simple library for comfortable work with local storage",
+  "author": "Dovbenko Aleksey <zavodnoyapl@gmail.com",
+  "source": "src/index.js",
+  "keywords": [
+    "local storage",
+    "types",
+    "javscript library"
+  ],
+  "repository": "zavodnoyapl1992/s-localstorage",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.0.1",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^4.19.1",
+    "eslint-config-standart": "^0.2.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "jest": "^23.1.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard",
+      "plugin:jest/recommended"
+    ],
+    "rules": {
+      "indent": [
+        2,
+        2
+      ],
+      "semi": [
+        2,
+        "always"
+      ],
+      "prefer-const": 1
+    },
+    "globals": {
+      "window": 0,
+      "globals": 0,
+      "module": 0
+    }
+  }
+}
