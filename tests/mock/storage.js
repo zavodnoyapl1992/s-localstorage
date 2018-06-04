@@ -2,8 +2,8 @@
  * Mock for local storage
  * @returns {{elements: {}, setItem: setItem, getItem: (function(*): null), remove: remove}}
  */
-function createLocalStorage () {
-  const elements = {};
+function createStorage () {
+  let elements = {};
   return {
     setItem: function (key, value) {
       elements[key] = value + '';
@@ -13,7 +13,10 @@ function createLocalStorage () {
     },
     removeItem: function (key) {
       delete elements[key];
+    },
+    clear: function () {
+      elements = {};
     }
   };
 }
-module.exports = createLocalStorage;
+module.exports = createStorage;

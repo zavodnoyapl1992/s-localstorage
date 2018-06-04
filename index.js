@@ -1,5 +1,5 @@
 
-const NAMESAPCE_LS = 'LS__';
+const NAMESAPCE_S = '__NAMESPACE__';
 
 const SUPPORTED_TYPES = [
   'number',
@@ -10,51 +10,63 @@ const SUPPORTED_TYPES = [
 ];
 /**
  * Simple work with local storage
- * @type {{get, set, remove}}
+ * @type {{get, set, remove, clear}}
  */
-const SIMPLE_LS = (function () {
+const SIMPLE_STORAGE = function (storage, storageName) {
   const isSupportedTypes = function (value) {
     try {
       JSON.parse(JSON.stringify(value));
     } catch (e) {
-      throw new TypeError(`It is not supported type for local storage, use ${SUPPORTED_TYPES + ''}`);
+      throw new TypeError(`It is not supported type for ${storageName}, use ${SUPPORTED_TYPES + ''}`);
     }
   };
   const set = function (key, value) {
     isSupportedTypes(value);
-    window.localStorage.setItem(NAMESAPCE_LS + key, JSON.stringify(value));
+    storage.setItem(NAMESAPCE_S + key, JSON.stringify(value));
   };
 
   const get = function (key, defaultValue) {
     defaultValue = defaultValue === undefined ? null : defaultValue;
-    const value = window.localStorage.getItem(NAMESAPCE_LS + key);
+    const value = storage.getItem(NAMESAPCE_S + key);
 
     return value !== null ? JSON.parse(value) : defaultValue;
   };
 
   const remove = function (key) {
-    window.localStorage.removeItem(NAMESAPCE_LS + key);
+    storage.removeItem(NAMESAPCE_S + key);
+  };
+  const clear = function () {
+    storage.clear();
   };
 
   try {
-    set('test', true);
-    get('test');
-    remove('test');
+    set('||test||', true);
+    get('||test||');
+    remove('||test||');
   } catch (e) {
-    console.error('Local storage is not supported');
+    console.error(`${storageName} is not supported`);
 
     return {
       get: (key, defaultValue) => { return defaultValue === undefined ? null : defaultValue; },
       set: () => {},
-      remove: () => {}
+      remove: () => {},
+      clear: () => {}
     };
   }
 
   return {
     get,
     set,
-    remove
+    remove,
+    clear
   };
-})();
+};
 
-module.exports = SIMPLE_LS;
+const localStorage = SIMPLE_STORAGE(window.localStorage, 'local storage')
+const sessionStorage = SIMPLE_STORAGE(window.sessionStorage, 'session storage')
+
+/**
+ *
+ * @type {{localStorage: SIMPLE_STORAGE, sessionStorage: SIMPLE_STORAGE}}
+ */
+module.exports = {localStorage, sessionStorage};
