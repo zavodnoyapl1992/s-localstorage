@@ -1,7 +1,4 @@
-const sMock = require('./mock/storage');
-window.localStorage = sMock();
-window.sessionStorage = sMock();
-const {localStorage, _} = require('../index');
+const {localStorage} = require('../index');
 
 test('CRUD for sting type', async () => {
   localStorage.set('test', 'test');
